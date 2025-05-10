@@ -4,35 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tarea extends Model
 {
-    /** @use HasFactory<\Database\Factories\TareaFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'nombre',
+        'titulo',
         'descripcion',
-        'fecha_limite',
+        'fecha_vencimiento',
+        'user_id',
     ];
 
-    protected $casts = [
-        'fecha_limite' => 'date',
-    ];
-
-    /**
-     * Tareas que pertenecen al usuario.
-     *
-     * @return void
-     */
-    public function owner()
+    public function propietario(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id', 'users');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function users()
+    public function invitados(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'tarea_user', 'tarea_id', 'user_id');
+        return $this->belongsToMany(User::class, 'tarea_usuario');
+    }
+
+    public function archivos()
+    {
+        return $this->hasMany(Archivo::class); // Asegúrate de que Archivo::class sea el modelo correcto
     }
 }

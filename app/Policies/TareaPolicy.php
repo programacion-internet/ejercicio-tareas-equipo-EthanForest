@@ -13,7 +13,7 @@ class TareaPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class TareaPolicy
      */
     public function view(User $user, Tarea $tarea): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class TareaPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class TareaPolicy
      */
     public function update(User $user, Tarea $tarea): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class TareaPolicy
      */
     public function delete(User $user, Tarea $tarea): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class TareaPolicy
      */
     public function restore(User $user, Tarea $tarea): bool
     {
-        return false;
+        return true;
     }
 
     /**
