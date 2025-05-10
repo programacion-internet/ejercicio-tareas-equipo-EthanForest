@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -59,22 +61,32 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtiene las tareas que ha creado el usuario.
+     * Obtiene las tareas que ha creado el usuario (es el propietario).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function misTareas()
+    public function tareasPropias(): HasMany
     {
         return $this->hasMany(Tarea::class);
     }
 
     /**
-     * Obtiene las tareas relacionadas con el usuario.
+     * Obtiene las tareas a las que ha sido invitado el usuario.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tareas()
+    public function tareasInvitado(): BelongsToMany
     {
-        return $this->belongsToMany(Tarea::class);
+        return $this->belongsToMany(Tarea::class, 'tarea_usuario');
     }
+
+    // /**
+    //  * Obtiene todas las tareas relacionadas con el usuario (tanto propias como invitado).
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    //  */
+    // public function tareas(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Tarea::class);
+    // }
 }

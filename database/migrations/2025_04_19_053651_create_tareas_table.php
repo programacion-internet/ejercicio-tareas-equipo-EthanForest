@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('nombre');
-            $table->string('descripcion');
-            $table->date('fecha_limite');
+            $table->string('titulo');
+            $table->text('descripcion')->nullable();
+            $table->dateTime('fecha_vencimiento')->nullable();
             $table->timestamps();
         });
     }
