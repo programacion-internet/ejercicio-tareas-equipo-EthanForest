@@ -30,7 +30,7 @@ class Archivo extends Model
     /**
      * Get the tarea that the file belongs to.
      */
-    public function tarea(): BelongsTo
+    public function tarea()
     {
         return $this->belongsTo(Tarea::class);
     }

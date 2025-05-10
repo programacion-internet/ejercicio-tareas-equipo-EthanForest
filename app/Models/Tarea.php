@@ -27,4 +27,9 @@ class Tarea extends Model
     {
         return $this->belongsToMany(User::class, 'tarea_usuario');
     }
+
+    public function archivos()
+    {
+        return $this->hasMany(Archivo::class); // Asegúrate de que Archivo::class sea el modelo correcto
+    }
 }

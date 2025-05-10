@@ -2,65 +2,25 @@
 
 namespace App\Policies;
 
-use App\Models\Archivo;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use App\Models\Archivo;
 
 class ArchivoPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Determine if the user can delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Archivo  $archivo
+     * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user): bool
+    public function delete(User $user, Archivo $archivo)
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Archivo $archivo): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Archivo $archivo): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Archivo $archivo): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Archivo $archivo): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Archivo $archivo): bool
-    {
-        return false;
+        // Aquí va tu lógica de autorización. Por ejemplo:
+        return $user->id === $archivo->user_id; // Solo el propietario puede eliminar
+        // o
+        // return $user->hasRole('admin'); // Los administradores pueden eliminar
+        // o
+        // return $user->can('eliminar-archivos'); // Usuarios con el permiso 'eliminar-archivos'
     }
 }

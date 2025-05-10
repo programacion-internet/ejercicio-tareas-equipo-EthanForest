@@ -6,6 +6,7 @@ use App\Models\Tarea;
 use App\Models\User;
 use App\Models\Archivo;
 use App\Http\Requests\StoreTareaRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Requests\UpdateTareaRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TareaInvitada as TareaInvitadaMail;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Gate;
 
 class TareaController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -168,9 +170,7 @@ class TareaController extends Controller
 
     public function deleteFile(Archivo $archivo)
     {
-        if (! Gate::allows('delete-archivo', $archivo)) {
-            abort(403, 'No estás autorizado para eliminar este archivo.');
-        }
+        $this->authorize('delete', $archivo);
 
         Storage::disk('public')->delete($archivo->ruta_archivo);
         $archivo->delete();
